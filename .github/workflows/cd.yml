@@ -1,0 +1,72 @@
+name: CD
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/vswrite-frontend:latest
+  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/vswrite-backend:latest
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push frontend
+        run: |
+          docker build \
+            --build-arg VITE_API_URL=/api \
+            --build-arg VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }} \
+            -t ${{ env.FRONTEND_IMAGE }} ./frontend
+          docker push ${{ env.FRONTEND_IMAGE }}
+
+      - name: Build and push backend
+        run: |
+          docker build -t ${{ env.BACKEND_IMAGE }} ./backend
+          docker push ${{ env.BACKEND_IMAGE }}
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/vswrite
+
+            git fetch origin main
+            git reset --hard origin/main
+
+            if [ ! -f .env.prod ]; then
+              echo ".env.prod is missing in /opt/vswrite"
+              exit 1
+            fi
+
+            export FRONTEND_IMAGE=${{ env.FRONTEND_IMAGE }}
+            export BACKEND_IMAGE=${{ env.BACKEND_IMAGE }}
+
+            docker compose --env-file .env.prod -f docker-compose.prod.yml pull
+            docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --remove-orphans
+
+            if curl -fsS http://localhost/health >/dev/null; then
+              echo "Deployment health check passed"
+            else
+              docker compose --env-file .env.prod -f docker-compose.prod.yml ps
+              docker compose --env-file .env.prod -f docker-compose.prod.yml logs --tail=120 nginx backend
+              exit 1
+            fi
