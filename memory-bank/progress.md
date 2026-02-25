@@ -81,3 +81,7 @@
 - Rebuilt pets into full-body sprites with visible ears/body/legs/tail.
 - Added movement across the writing board with continuous motion loops.
 
+## Update - 2026-02-25 (Docked Sidebar Behavior Fix)
+- Fixed responsive behavior that could collapse the sidebar to top layout on narrower screens.
+- Sidebar is now persistently docked on the left and visible independent of focus mode.
+

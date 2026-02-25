@@ -175,13 +175,11 @@ export default function App() {
   return (
     <main className="app-shell relative min-h-screen">
       <div className="workspace-shell">
-        {!focusMode && (
-          <LeftSidebar
-            onOpenExtensions={() => setIsMarketplaceOpen(true)}
-            onExportMarkdown={exportMarkdown}
-            onExportPdf={exportPdf}
-          />
-        )}
+        <LeftSidebar
+          onOpenExtensions={() => setIsMarketplaceOpen(true)}
+          onExportMarkdown={exportMarkdown}
+          onExportPdf={exportPdf}
+        />
 
         <section className="workspace-main">
           <header className="app-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] backdrop-blur">

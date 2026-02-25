@@ -675,23 +675,11 @@ body {
 
 @media (max-width: 900px) {
   .workspace-shell {
-    grid-template-columns: 1fr;
+    grid-template-columns: 52px 1fr;
+    gap: 0.65rem;
   }
 
-  .left-sidebar {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  .left-sidebar-top,
-  .left-sidebar-bottom {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .sidebar-action {
-    width: 40px;
-    height: 40px;
+  .app-shell {
+    padding: 0.55rem;
   }
 }
