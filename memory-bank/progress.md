@@ -36,10 +36,10 @@
 - Backend build: passing
 
 ## Next Steps
-- Add HTTPS-ready production NGINX config (cert paths + redirect 80->443)
+- Add baseline alert rules and operational runbook checks for monitoring hardening
 - Add Prisma migrations and seed workflow for PostgreSQL path
 - Add request-level auth/session strategy if multi-user support is needed
-- Add richer frontend integration tests for autosave and export UX
+- Add richer frontend integration tests for account/import/sidebar flows
 
 ## Notes
 - Implementation is intentionally modular to avoid a monolith.
@@ -97,4 +97,11 @@
 - Moved account access to a dedicated sidebar account icon above settings.
 - Added account popover at the bottom-left sidebar region.
 - Added `frontend/.env.example` and local `frontend/.env.local` with `VITE_GOOGLE_CLIENT_ID` key.
+
+## Update - 2026-02-25 (Phase 5 Deployment Hardening)
+- Added `docker-compose.prod.yml` for image-based production deployment.
+- Added HTTPS NGINX config at `infra/nginx/nginx.prod.conf` with `80 -> 443` redirect.
+- Added production env template at `.env.prod.example`.
+- Hardened CD workflow to pass frontend auth build args and run post-deploy `/health` checks.
+- Updated deployment docs in `README.md` with production rollout commands.
 

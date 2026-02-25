@@ -60,18 +60,31 @@ When using PostgreSQL, set `DATABASE_URL` and run Prisma migration commands in `
 	- Builds Docker images
 - CD (`.github/workflows/cd.yml`):
 	- Builds and pushes images to GHCR
-	- Deploys to EC2 via SSH and restarts services
+	- Passes frontend build-time auth env (`VITE_GOOGLE_CLIENT_ID`)
+	- Deploys to EC2 via SSH using `docker-compose.prod.yml`
+	- Runs post-deploy health check (`/health`) and fails on unhealthy rollout
 
 Required repository secrets for deployment:
 - `EC2_HOST`
 - `EC2_USER`
 - `EC2_SSH_KEY`
+- `VITE_GOOGLE_CLIENT_ID`
 
 ## NGINX + HTTPS (Production)
-1. Install Docker and Docker Compose on EC2.
-2. Place project in `/opt/vswrite`.
-3. Configure DNS to the instance.
-4. Add TLS certs (Let's Encrypt/certbot) and update NGINX config for `443` + redirect from `80`.
+1. Install Docker and Docker Compose on EC2 and clone the repo into `/opt/vswrite`.
+2. Copy `.env.prod.example` to `.env.prod` and fill in secrets (DB password, URLs, etc.).
+3. Place TLS cert files at:
+	- `infra/nginx/certs/fullchain.pem`
+	- `infra/nginx/certs/privkey.pem`
+4. Ensure your domain points to the instance.
+5. Deploy with:
+	- `docker compose --env-file .env.prod -f docker-compose.prod.yml pull`
+	- `docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --remove-orphans`
+
+Production files:
+- `docker-compose.prod.yml`
+- `infra/nginx/nginx.prod.conf`
+- `.env.prod.example`
 
 ## Monitoring
 - Prometheus scrapes backend metrics from `/metrics`.

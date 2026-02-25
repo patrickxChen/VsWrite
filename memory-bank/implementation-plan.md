@@ -8,7 +8,7 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 - ✅ Phase 2: Frontend core UX — completed (evolved to VS Code-like layout + extensions UI)
 - ✅ Phase 3: Backend core API — completed
 - ✅ Phase 4: Frontend/backend integration — completed
-- 🔄 Phase 5: CI/CD + deployment hardening — in progress
+- ✅ Phase 5: CI/CD + deployment hardening — completed
 - 🔄 Phase 6: Monitoring hardening — in progress
 - ⏳ Phase 7: Final testing/validation — pending
 

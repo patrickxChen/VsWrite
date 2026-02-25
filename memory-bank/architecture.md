@@ -11,8 +11,10 @@
 
 ### Root
 - `docker-compose.yml`: Runs full app stack (frontend, backend, nginx, prometheus, grafana, postgres, redis)
+- `docker-compose.prod.yml`: Production stack using prebuilt GHCR images, HTTPS NGINX, and `.env.prod` runtime settings
+- `.env.prod.example`: Template for production environment variables consumed by deployment compose/config
 - `.github/workflows/ci.yml`: Test/build checks and Docker image build validation
-- `.github/workflows/cd.yml`: Build/push images and deploy to EC2 via SSH
+- `.github/workflows/cd.yml`: Build/push images and deploy to EC2 via SSH with post-deploy health verification
 - `README.md`: Setup, run, deploy, and monitoring instructions
 
 ### Frontend (`frontend/`)
@@ -47,6 +49,8 @@
 
 ### Infrastructure (`infra/`)
 - `nginx/nginx.conf`: Reverse proxy rules (`/`, `/sessions`, `/health`, `/metrics`)
+- `nginx/nginx.prod.conf`: HTTPS reverse proxy (`80 -> 443` redirect, TLS cert paths, app/API routing)
+- `nginx/certs/`: Mounted certificate directory for production TLS material
 - `monitoring/prometheus.yml`: Prometheus scrape config
 - `monitoring/grafana/provisioning/**`: Auto-provisioned datasource and dashboard config
 
@@ -160,4 +164,9 @@ CREATE TABLE sessions (
 - Moved account access from top header into left activity bar.
 - Added account icon directly above settings icon in bottom-left sidebar region.
 - Added account popover anchored near the bottom-left sidebar area.
+
+## Recent DevOps Update (Phase 5 Hardening)
+- Added production deployment compose file (`docker-compose.prod.yml`) with GHCR image flow.
+- Added HTTPS-ready NGINX production config and cert mount strategy.
+- Hardened CD workflow with frontend build args for auth config and post-deploy `/health` validation.
 
