@@ -11,7 +11,7 @@ Vscode, but for writing.
 - Account icon is placed above the bottom-left Settings icon
 - VS Code-like icon sidebar for key actions
 - Sidebar remains docked on the left across normal viewport sizes
-- Export to Markdown and PDF from left sidebar
+- Export to Markdown and Save As from left sidebar
 - Import `.txt` / `.md` files from left sidebar
 - Extensions marketplace panel (VS Code-inspired)
 - Screen Pets extension with install/enable/disable/uninstall, full-body sprites, and board movement

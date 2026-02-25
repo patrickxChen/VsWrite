@@ -10,8 +10,7 @@
 - Vite (build tool)
 - Tailwind CSS (minimal utility styling)
 - Optional libraries:
-  - `jspdf` / `pdf-lib` for PDF export
-  - `file-saver` for browser file downloads
+  - `file-saver` for browser file downloads fallback (if native save APIs are unavailable)
 
 ## Backend
 - Node.js + Express (TypeScript)

@@ -21,7 +21,7 @@
 - `src/App.tsx`: Main app orchestration (focus mode, autosave, account/import flows, extension runtime, and theme selection)
 - `src/components/Editor.tsx`: Editor textarea UI
 - `src/components/Toolbar.tsx`: Focus/sound controls and save status
-- `src/components/ExportButtons.tsx`: Markdown/PDF export controls
+- `src/components/ExportButtons.tsx`: Markdown/Save As controls
 - `src/components/ThemeSwitcher.tsx`: VS Code-like theme selector
 - `src/components/ExtensionsMarketplace.tsx`: Extensions marketplace side panel UI
 - `src/components/PetOverlay.tsx`: Animated screen pets overlay when extension is enabled

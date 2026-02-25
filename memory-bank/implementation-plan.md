@@ -10,7 +10,7 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 - ✅ Phase 4: Frontend/backend integration — completed
 - ✅ Phase 5: CI/CD + deployment hardening — completed
 - 🔄 Phase 6: Monitoring hardening — in progress (baseline Prometheus alerts configured)
-- ⏳ Phase 7: Final testing/validation — pending
+- 🔄 Phase 7: Final testing/validation — in progress
 
 ## Phase 1: Foundation & Project Scaffolding
 ### Tasks
@@ -34,7 +34,7 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 - Implement word counting utility
 - Implement export features:
   - Markdown export from editor content
-  - PDF export using client-side utility library
+  - Save As flow with user-selected destination (native picker with browser fallback)
 - Add VS Code-like layout model:
   - Left activity bar
   - Sidebar actions for extensions/export/import
@@ -168,8 +168,8 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 ## Risks & Mitigations
 - Deployment complexity on EC2
   - Mitigation: scripted deploy + health checks
-- Export feature inconsistency (PDF)
-  - Mitigation: fixed font/layout baseline and browser compatibility testing
+- Save As browser compatibility differences
+  - Mitigation: native file picker when available, download fallback when unavailable
 - Metrics overhead
   - Mitigation: keep labels low-cardinality and scrape intervals conservative
 

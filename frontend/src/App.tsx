@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { jsPDF } from "jspdf";
 import { Editor } from "./components/Editor";
 import { ExtensionsMarketplace } from "./components/ExtensionsMarketplace";
 import { GoogleAuth, type GoogleUser } from "./components/GoogleAuth";
@@ -187,11 +186,49 @@ export default function App() {
     URL.revokeObjectURL(url);
   };
 
-  const exportPdf = () => {
-    const pdf = new jsPDF();
-    const lines = pdf.splitTextToSize(content || "", 180);
-    pdf.text(lines, 15, 20);
-    pdf.save("draft.pdf");
+  const saveAsDocument = async () => {
+    const filename = "draft.md";
+    const data = content;
+
+    try {
+      if ("showSaveFilePicker" in window) {
+        const fileHandle = await (window as Window & {
+          showSaveFilePicker?: (options?: {
+            suggestedName?: string;
+            types?: Array<{ description: string; accept: Record<string, string[]> }>;
+          }) => Promise<{ createWritable: () => Promise<{ write: (value: string) => Promise<void>; close: () => Promise<void> }> }>;
+        }).showSaveFilePicker?.({
+          suggestedName: filename,
+          types: [{ description: "Markdown", accept: { "text/markdown": [".md", ".markdown"], "text/plain": [".txt"] } }]
+        });
+
+        if (!fileHandle) {
+          setSaveState("Save canceled");
+          return;
+        }
+
+        const writable = await fileHandle.createWritable();
+        await writable.write(data);
+        await writable.close();
+        setSaveState("Saved with Save As");
+        return;
+      }
+
+      const blob = new Blob([data], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+      setSaveState("Downloaded draft.md");
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setSaveState("Save canceled");
+        return;
+      }
+      setSaveState("Save As failed");
+    }
   };
 
   const installPetsExtension = () => {
@@ -241,7 +278,7 @@ export default function App() {
         <LeftSidebar
           onOpenExtensions={() => setIsMarketplaceOpen(true)}
           onExportMarkdown={exportMarkdown}
-          onExportPdf={exportPdf}
+          onSaveAs={saveAsDocument}
           onImportFile={onImportFile}
           onToggleAccount={() => {
             setIsSettingsOpen(false);

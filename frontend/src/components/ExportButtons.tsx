@@ -1,9 +1,9 @@
 type ExportButtonsProps = {
   onExportMarkdown: () => void;
-  onExportPdf: () => void;
+  onSaveAs: () => void;
 };
 
-export function ExportButtons({ onExportMarkdown, onExportPdf }: ExportButtonsProps) {
+export function ExportButtons({ onExportMarkdown, onSaveAs }: ExportButtonsProps) {
   return (
     <div className="flex flex-wrap gap-2">
       <button
@@ -13,10 +13,10 @@ export function ExportButtons({ onExportMarkdown, onExportPdf }: ExportButtonsPr
         Export .md
       </button>
       <button
-        onClick={onExportPdf}
+        onClick={onSaveAs}
         className="export-btn export-btn-accent rounded-lg border px-3.5 py-1.5 text-sm font-medium shadow-sm transition"
       >
-        Export PDF
+        Save As
       </button>
     </div>
   );

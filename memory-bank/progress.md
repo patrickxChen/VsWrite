@@ -10,7 +10,7 @@
 	- Focus mode toggle
 	- Typewriter sound toggle
 	- Word goal tracker
-	- Export to Markdown and PDF
+	- Export to Markdown and Save As
 - Implemented Node.js backend MVP:
 	- Session CRUD endpoints (`POST/GET/PUT`)
 	- Validation with Zod
@@ -110,4 +110,18 @@
 - Added alert rule loading in `infra/monitoring/prometheus.yml`.
 - Mounted alerts config in both `docker-compose.yml` and `docker-compose.prod.yml`.
 - Added monitoring verification guidance and alert inventory in `README.md`.
+
+## Update - 2026-02-25 (Save As Replaces PDF Export)
+- Replaced sidebar `Export PDF` action with `Save As`.
+- Added native file picker Save As support (`showSaveFilePicker`) with download fallback.
+- Removed `jspdf` dependency from frontend package configuration.
+
+## Update - 2026-02-25 (Phase 7 Validation Checkpoint)
+- Added frontend behavior test coverage for sidebar actions (`LeftSidebar.test.tsx`).
+- Validation run results:
+	- Frontend tests: passing
+	- Backend tests: passing
+	- Frontend build: passing
+	- Backend build: passing
+- Deployment smoke validation remains pending in local workspace due unavailable Docker runtime on host.
 

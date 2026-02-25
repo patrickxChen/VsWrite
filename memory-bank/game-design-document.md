@@ -15,7 +15,7 @@ Build a writing app that supports focused drafting while providing practical out
 - Focus mode to remove visual distractions
 - Soft typewriter sound feedback while typing
 - Daily/session word goal with progress indicator
-- Easy export to Markdown and PDF
+- Easy export to Markdown and Save As
 
 ## Target Users
 - Students and researchers writing essays and notes
@@ -28,7 +28,7 @@ Build a writing app that supports focused drafting while providing practical out
 2. As a writer, I want to toggle focus mode so I can hide non-essential UI.
 3. As a writer, I want subtle typewriter sounds while typing so writing feels tactile.
 4. As a writer, I want to set a word goal and track progress so I stay accountable.
-5. As a writer, I want to export in Markdown or PDF so I can publish/share content.
+5. As a writer, I want to export in Markdown or Save As so I can publish/share content.
 6. As a returning user, I want session state saved so I can continue where I left off.
 
 ## Functional Requirements
@@ -39,7 +39,7 @@ Build a writing app that supports focused drafting while providing practical out
 - Word count + goal progress bar
 - Export controls:
   - Export current document as `.md`
-  - Export current document as `.pdf`
+  - Save current document with user-selected destination/name
 
 ### Backend
 - Session API for creating/updating/retrieving writing sessions
@@ -93,7 +93,7 @@ Build a writing app that supports focused drafting while providing practical out
 - User can complete export in <= 2 clicks
 
 ## Risk Register (High-Level)
-- PDF export consistency across environments
+- Save As browser API support differences across environments
 - Sound playback differences across browsers/autoplay policies
 - EC2 deployment drift without infrastructure-as-code
 - Monitoring cardinality explosion if metrics labels are poorly designed
