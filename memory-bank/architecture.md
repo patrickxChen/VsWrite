@@ -21,6 +21,8 @@
 - `src/components/Toolbar.tsx`: Focus/sound controls, bold action, and save status
 - `src/components/ExportButtons.tsx`: Markdown/PDF export controls
 - `src/components/ThemeSwitcher.tsx`: VS Code-like theme selector
+- `src/components/ExtensionsMarketplace.tsx`: Extensions marketplace side panel UI
+- `src/components/PetOverlay.tsx`: Animated screen pets overlay when extension is enabled
 - `src/lib/api.ts`: REST client for session create/get/update
 - `src/lib/wordCount.ts`: Word counting utility
 - `src/lib/typewriterSound.ts`: Typewriter sound generator
@@ -118,4 +120,11 @@ CREATE TABLE sessions (
 - Moved export controls to top header as requested.
 - Added VS Code-inspired theme presets: `Dark+`, `Light+`, `Monokai`, and `Quiet Light`.
 - Introduced CSS variable theme tokens and persisted user theme preference in local storage.
+
+## Recent UX Update (Extensions Marketplace)
+- Added a VS Code-like `Extensions` launcher in the top header.
+- Implemented a right-side marketplace panel for extension discovery/management.
+- Added first extension: `Screen Pets`.
+- Added extension lifecycle controls: `Install`, `Enable/Disable`, and `Uninstall`.
+- Persisted extension install/enable state in local storage.
 

@@ -63,3 +63,9 @@
 - Moved export actions to the top header area.
 - Updated styling to use theme tokens across header, toolbar, editor, buttons, and status strip.
 
+## Update - 2026-02-25 (Extensions Marketplace + Pets)
+- Added an extensions marketplace panel inspired by VS Code.
+- Added first extension: `Screen Pets` with install/enable/disable/uninstall actions.
+- Added animated pet overlay runtime when extension is enabled.
+- Persisted extension install and enable state in local storage.
+

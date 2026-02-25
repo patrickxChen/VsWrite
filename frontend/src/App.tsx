@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { Editor } from "./components/Editor";
+import { ExtensionsMarketplace } from "./components/ExtensionsMarketplace";
 import { ExportButtons } from "./components/ExportButtons";
+import { PetOverlay } from "./components/PetOverlay";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { Toolbar } from "./components/Toolbar";
 import { createSession, getSession, updateSession } from "./lib/api";
@@ -10,6 +12,8 @@ import { countWords } from "./lib/wordCount";
 
 const SESSION_KEY = "vswrite.session.id";
 const THEME_KEY = "vswrite.theme";
+const PETS_INSTALLED_KEY = "vswrite.extension.pets.installed";
+const PETS_ENABLED_KEY = "vswrite.extension.pets.enabled";
 const DEFAULT_WORD_GOAL = 300;
 
 const THEME_OPTIONS = [
@@ -30,6 +34,9 @@ export default function App() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [isTyping, setIsTyping] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem(THEME_KEY) ?? "dark-plus");
+  const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
+  const [petsInstalled, setPetsInstalled] = useState(localStorage.getItem(PETS_INSTALLED_KEY) === "true");
+  const [petsEnabled, setPetsEnabled] = useState(localStorage.getItem(PETS_ENABLED_KEY) === "true");
 
   const words = useMemo(() => countWords(content), [content]);
 
@@ -37,6 +44,14 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem(PETS_INSTALLED_KEY, String(petsInstalled));
+  }, [petsInstalled]);
+
+  useEffect(() => {
+    localStorage.setItem(PETS_ENABLED_KEY, String(petsEnabled));
+  }, [petsEnabled]);
 
   useEffect(() => {
     const id = localStorage.getItem(SESSION_KEY);
@@ -143,8 +158,24 @@ export default function App() {
     });
   };
 
+  const installPetsExtension = () => {
+    setPetsInstalled(true);
+    setPetsEnabled(true);
+  };
+
+  const togglePetsExtension = () => {
+    setPetsEnabled((previous) => !previous);
+  };
+
+  const uninstallPetsExtension = () => {
+    setPetsInstalled(false);
+    setPetsEnabled(false);
+  };
+
   return (
     <main className="app-shell relative mx-auto max-w-5xl px-3 py-6 sm:px-4 md:py-8">
+      {petsInstalled && petsEnabled && <PetOverlay />}
+
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_18%,rgba(56,189,248,0.14),transparent_45%),radial-gradient(circle_at_86%_12%,rgba(167,139,250,0.12),transparent_44%),radial-gradient(circle_at_50%_92%,rgba(250,204,21,0.08),transparent_40%)]" />
       {!focusMode && (
         <header className="app-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-300/80 bg-white/80 px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] backdrop-blur">
@@ -160,11 +191,24 @@ export default function App() {
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
+            <button className="extensions-launch rounded-lg border px-3 py-1.5 text-sm font-medium shadow-sm transition" onClick={() => setIsMarketplaceOpen(true)}>
+              Extensions
+            </button>
             <ThemeSwitcher value={theme} options={THEME_OPTIONS} onChange={setTheme} />
             <ExportButtons onExportMarkdown={exportMarkdown} onExportPdf={exportPdf} />
           </div>
         </header>
       )}
+
+      <ExtensionsMarketplace
+        isOpen={isMarketplaceOpen}
+        onClose={() => setIsMarketplaceOpen(false)}
+        petsInstalled={petsInstalled}
+        petsEnabled={petsEnabled}
+        onInstallPets={installPetsExtension}
+        onTogglePets={togglePetsExtension}
+        onUninstallPets={uninstallPetsExtension}
+      />
 
       <Toolbar
         focusMode={focusMode}
