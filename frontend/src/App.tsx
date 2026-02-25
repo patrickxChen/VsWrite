@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { Editor } from "./components/Editor";
 import { ExportButtons } from "./components/ExportButtons";
@@ -11,6 +11,7 @@ import { countWords } from "./lib/wordCount";
 const SESSION_KEY = "vswrite.session.id";
 
 export default function App() {
+  const editorRef = useRef<HTMLTextAreaElement>(null);
   const [content, setContent] = useState("");
   const [focusMode, setFocusMode] = useState(false);
   const [soundOn, setSoundOn] = useState(true);
@@ -85,11 +86,43 @@ export default function App() {
     pdf.save("draft.pdf");
   };
 
+  const applyBoldFormatting = () => {
+    const textarea = editorRef.current;
+    if (!textarea) {
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    if (start === end) {
+      const nextContent = `${content.slice(0, start)}****${content.slice(end)}`;
+      setContent(nextContent);
+      window.requestAnimationFrame(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start + 2, start + 2);
+      });
+      return;
+    }
+
+    const selectedText = content.slice(start, end);
+    const nextContent = `${content.slice(0, start)}**${selectedText}**${content.slice(end)}`;
+    setContent(nextContent);
+    window.requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + 2, end + 2);
+    });
+  };
+
   return (
-    <main className="mx-auto max-w-4xl px-4 py-6">
+    <main className="relative mx-auto max-w-5xl px-4 py-8">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.25),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.16),transparent_40%)]" />
       {!focusMode && (
-        <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-semibold text-slate-100">VsWrite</h1>
+        <header className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-700/70 bg-slate-900/40 px-4 py-3 backdrop-blur">
+          <div>
+            <h1 className="text-xl font-semibold tracking-wide text-slate-100">VsWrite</h1>
+            <p className="text-xs text-slate-400">Write with focus, keep your flow.</p>
+          </div>
           <ExportButtons onExportMarkdown={exportMarkdown} onExportPdf={exportPdf} />
         </header>
       )}
@@ -97,6 +130,7 @@ export default function App() {
       <Toolbar
         focusMode={focusMode}
         onToggleFocus={() => setFocusMode((previous) => !previous)}
+        onBold={applyBoldFormatting}
         soundOn={soundOn}
         onToggleSound={() => setSoundOn((previous) => !previous)}
         volume={volume}
@@ -104,8 +138,8 @@ export default function App() {
         saveState={saveState}
       />
 
-      <div className="grid gap-4 md:grid-cols-[1fr_220px]">
-        <Editor value={content} onChange={setContent} onKeyTyped={handleType} focusMode={focusMode} />
+      <div className="grid gap-4 md:grid-cols-[1fr_240px]">
+        <Editor value={content} onChange={setContent} onKeyTyped={handleType} focusMode={focusMode} editorRef={editorRef} />
         <GoalTracker wordCount={words} wordGoal={wordGoal} onGoalChange={setWordGoal} />
       </div>
     </main>

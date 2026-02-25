@@ -43,5 +43,11 @@
 
 ## Notes
 - Implementation is intentionally modular to avoid a monolith.
-- Per workspace constraints, no git commits or branch operations were performed automatically.
+- Milestone-level commits are being applied on the active feature branch.
+
+## Update - 2026-02-25 (UI + Formatting)
+- Upgraded frontend visuals for a more appealing look while keeping the minimal writing UX.
+- Added toolbar `Bold` option for markdown-style emphasis (`**selected text**`).
+- Added cursor-aware insertion when no text is selected (inserts `****` and places cursor in the middle).
+- Validation: frontend build passes after the update.
 

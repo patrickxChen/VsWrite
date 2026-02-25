@@ -16,9 +16,9 @@
 - `README.md`: Setup, run, deploy, and monitoring instructions
 
 ### Frontend (`frontend/`)
-- `src/App.tsx`: Main app orchestration (focus mode, autosave, export)
+- `src/App.tsx`: Main app orchestration (focus mode, autosave, export, markdown bold insertion)
 - `src/components/Editor.tsx`: Editor textarea UI
-- `src/components/Toolbar.tsx`: Focus/sound controls and save status
+- `src/components/Toolbar.tsx`: Focus/sound controls, bold action, and save status
 - `src/components/GoalTracker.tsx`: Word count + word goal progress UI
 - `src/components/ExportButtons.tsx`: Markdown/PDF export controls
 - `src/lib/api.ts`: REST client for session create/get/update
@@ -101,4 +101,9 @@ CREATE TABLE sessions (
 - Persistence concerns split behind `SessionStore` interface.
 - Infra concerns isolated under `infra/` and workflow files.
 - This structure avoids monolith growth and supports future scaling.
+
+## Recent Frontend UX Upgrade
+- Refined visual design with elevated cards, subtle gradients, and improved spacing/contrast.
+- Added a `Bold` formatting action in toolbar that wraps selected text with markdown markers (`**text**`).
+- Bold action supports cursor-only insertion by placing cursor between inserted markers (`****` -> cursor between).
 
