@@ -194,6 +194,23 @@ body {
   box-shadow: 0 14px 26px rgba(2, 6, 23, 0.3);
 }
 
+.sidebar-account-popover {
+  position: absolute;
+  left: 64px;
+  bottom: 68px;
+  z-index: 35;
+  min-width: 260px;
+  border: 1px solid var(--panel-border);
+  border-radius: 0.7rem;
+  padding: 0.6rem;
+  background: var(--panel-bg);
+  box-shadow: 0 14px 26px rgba(2, 6, 23, 0.3);
+}
+
+.sidebar-account-popover[data-open="false"] {
+  display: none;
+}
+
 .sidebar-settings-title {
   margin: 0 0 0.5rem;
   font-size: 0.82rem;

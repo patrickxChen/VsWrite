@@ -8,6 +8,7 @@ Vscode, but for writing.
 - Focus mode toggle
 - Typewriter sound effect toggle
 - VS Code-style theme selection from bottom-left Settings (gear)
+- Account icon is placed above the bottom-left Settings icon
 - VS Code-like icon sidebar for key actions
 - Sidebar remains docked on the left across normal viewport sizes
 - Export to Markdown and PDF from left sidebar
@@ -15,6 +16,10 @@ Vscode, but for writing.
 - Extensions marketplace panel (VS Code-inspired)
 - Screen Pets extension with install/enable/disable/uninstall, full-body sprites, and board movement
 - Session save/load through backend API
+
+## Environment
+- Frontend Google auth key:
+	- `VITE_GOOGLE_CLIENT_ID` (see `frontend/.env.example`)
 
 ## Project Structure
 - `frontend/` React + TypeScript + Tailwind app

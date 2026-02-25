@@ -26,6 +26,7 @@
 - `src/components/LeftSidebar.tsx`: VS Code-like left sidebar for primary actions (extensions/export/theme)
 - `src/components/GoogleAuth.tsx`: Google sign-in UI and account profile display
 - `src/components/SidebarSettings.tsx`: Bottom-left settings popover
+- `frontend/.env.example`: Template env configuration including `VITE_GOOGLE_CLIENT_ID`
 - `src/lib/api.ts`: REST client for session create/get/update
 - `src/lib/wordCount.ts`: Word counting utility
 - `src/lib/typewriterSound.ts`: Typewriter sound generator
@@ -156,4 +157,9 @@ CREATE TABLE sessions (
 - Added account-scoped restore behavior for the last written content and last session id.
 - Added left-sidebar `Import File` action for `.txt` and `.md` files.
 - Maintains VS Code-like behavior where users return to their previous writing state.
+
+## Recent UX Update (Account Icon Placement)
+- Moved account access from top header into left activity bar.
+- Added account icon directly above settings icon in bottom-left sidebar region.
+- Added account popover anchored near the bottom-left sidebar area.
 

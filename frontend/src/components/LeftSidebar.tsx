@@ -3,6 +3,8 @@ type LeftSidebarProps = {
   onExportMarkdown: () => void;
   onExportPdf: () => void;
   onImportFile: () => void;
+  onToggleAccount: () => void;
+  isAccountOpen: boolean;
   onToggleSettings: () => void;
   isSettingsOpen: boolean;
 };
@@ -12,6 +14,8 @@ export function LeftSidebar({
   onExportMarkdown,
   onExportPdf,
   onImportFile,
+  onToggleAccount,
+  isAccountOpen,
   onToggleSettings,
   isSettingsOpen
 }: LeftSidebarProps) {
@@ -52,6 +56,18 @@ export function LeftSidebar({
       </div>
 
       <div className="left-sidebar-bottom">
+        <button
+          className="sidebar-action"
+          onClick={onToggleAccount}
+          title="Account"
+          aria-label="Account"
+          aria-pressed={isAccountOpen}
+        >
+          <svg className="sidebar-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" aria-hidden="true">
+            <circle cx="8" cy="5.2" r="2.3" />
+            <path d="M3 13.4c.6-2 2.7-3.2 5-3.2s4.4 1.2 5 3.2" />
+          </svg>
+        </button>
         <button
           className="sidebar-action"
           onClick={onToggleSettings}

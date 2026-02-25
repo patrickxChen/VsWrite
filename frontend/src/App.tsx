@@ -51,6 +51,7 @@ export default function App() {
     }
   });
   const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [petsInstalled, setPetsInstalled] = useState(localStorage.getItem(PETS_INSTALLED_KEY) === "true");
   const [petsEnabled, setPetsEnabled] = useState(localStorage.getItem(PETS_ENABLED_KEY) === "true");
@@ -270,9 +271,21 @@ export default function App() {
           onExportMarkdown={exportMarkdown}
           onExportPdf={exportPdf}
           onImportFile={onImportFile}
-          onToggleSettings={() => setIsSettingsOpen((previous) => !previous)}
+          onToggleAccount={() => {
+            setIsSettingsOpen(false);
+            setIsAccountOpen((previous) => !previous);
+          }}
+          isAccountOpen={isAccountOpen}
+          onToggleSettings={() => {
+            setIsAccountOpen(false);
+            setIsSettingsOpen((previous) => !previous);
+          }}
           isSettingsOpen={isSettingsOpen}
         />
+
+        <div className="sidebar-account-popover" data-open={isAccountOpen}>
+          <GoogleAuth user={account} onSignIn={setAccount} onSignOut={onSignOut} />
+        </div>
 
         <SidebarSettings
           isOpen={isSettingsOpen}
@@ -294,7 +307,6 @@ export default function App() {
                 <p className="app-subtitle text-xs">Vscode, but for writing.</p>
               </div>
             </div>
-            <GoogleAuth user={account} onSignIn={setAccount} onSignOut={onSignOut} />
           </header>
 
           <ExtensionsMarketplace

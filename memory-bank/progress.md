@@ -95,3 +95,8 @@
 - Added account-scoped last session/draft restore so users return to their latest writing state.
 - Added file import action (`.txt`, `.md`) from the left sidebar.
 
+## Update - 2026-02-25 (Bottom-Left Account Icon + Env Setup)
+- Moved account access to a dedicated sidebar account icon above settings.
+- Added account popover at the bottom-left sidebar region.
+- Added `frontend/.env.example` and local `frontend/.env.local` with `VITE_GOOGLE_CLIENT_ID` key.
+
