@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { Editor } from "./components/Editor";
 import { ExtensionsMarketplace } from "./components/ExtensionsMarketplace";
+import { GoogleAuth, type GoogleUser } from "./components/GoogleAuth";
 import { LeftSidebar } from "./components/LeftSidebar";
 import { PetOverlay } from "./components/PetOverlay";
 import { SidebarSettings } from "./components/SidebarSettings";
@@ -12,6 +13,9 @@ import { countWords } from "./lib/wordCount";
 
 const SESSION_KEY = "vswrite.session.id";
 const THEME_KEY = "vswrite.theme";
+const ACCOUNT_KEY = "vswrite.account";
+const SESSION_MAP_KEY = "vswrite.session.map";
+const LAST_TEXT_KEY = "vswrite.last.text.map";
 const PETS_INSTALLED_KEY = "vswrite.extension.pets.installed";
 const PETS_ENABLED_KEY = "vswrite.extension.pets.enabled";
 const DEFAULT_WORD_GOAL = 300;
@@ -25,6 +29,7 @@ const THEME_OPTIONS = [
 
 export default function App() {
   const editorRef = useRef<HTMLTextAreaElement>(null);
+  const importInputRef = useRef<HTMLInputElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
   const [content, setContent] = useState("");
   const [focusMode, setFocusMode] = useState(false);
@@ -34,17 +39,53 @@ export default function App() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [isTyping, setIsTyping] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem(THEME_KEY) ?? "dark-plus");
+  const [account, setAccount] = useState<GoogleUser | null>(() => {
+    const raw = localStorage.getItem(ACCOUNT_KEY);
+    if (!raw) {
+      return null;
+    }
+    try {
+      return JSON.parse(raw) as GoogleUser;
+    } catch {
+      return null;
+    }
+  });
   const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [petsInstalled, setPetsInstalled] = useState(localStorage.getItem(PETS_INSTALLED_KEY) === "true");
   const [petsEnabled, setPetsEnabled] = useState(localStorage.getItem(PETS_ENABLED_KEY) === "true");
 
   const words = useMemo(() => countWords(content), [content]);
+  const accountScope = account?.sub ?? "guest";
+
+  function readMap(key: string): Record<string, string> {
+    const raw = localStorage.getItem(key);
+    if (!raw) {
+      return {};
+    }
+    try {
+      return JSON.parse(raw) as Record<string, string>;
+    } catch {
+      return {};
+    }
+  }
+
+  function writeMap(key: string, value: Record<string, string>) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (!account) {
+      localStorage.removeItem(ACCOUNT_KEY);
+      return;
+    }
+    localStorage.setItem(ACCOUNT_KEY, JSON.stringify(account));
+  }, [account]);
 
   useEffect(() => {
     localStorage.setItem(PETS_INSTALLED_KEY, String(petsInstalled));
@@ -55,8 +96,18 @@ export default function App() {
   }, [petsEnabled]);
 
   useEffect(() => {
-    const id = localStorage.getItem(SESSION_KEY);
+    const map = readMap(SESSION_MAP_KEY);
+    const lastTextMap = readMap(LAST_TEXT_KEY);
+
+    if (lastTextMap[accountScope]) {
+      setContent(lastTextMap[accountScope]);
+    } else {
+      setContent("");
+    }
+
+    const id = map[accountScope] ?? localStorage.getItem(SESSION_KEY);
     if (!id) {
+      setSessionId(null);
       return;
     }
 
@@ -66,9 +117,18 @@ export default function App() {
         setContent(session.content);
       })
       .catch(() => {
-        localStorage.removeItem(SESSION_KEY);
+        const next = readMap(SESSION_MAP_KEY);
+        delete next[accountScope];
+        writeMap(SESSION_MAP_KEY, next);
+        setSessionId(null);
       });
-  }, []);
+  }, [accountScope]);
+
+  useEffect(() => {
+    const map = readMap(LAST_TEXT_KEY);
+    map[accountScope] = content;
+    writeMap(LAST_TEXT_KEY, map);
+  }, [accountScope, content]);
 
   useEffect(() => {
     const timeout = window.setTimeout(async () => {
@@ -80,7 +140,9 @@ export default function App() {
       try {
         if (!sessionId) {
           const created = await createSession({ content, wordCount: words, wordGoal: DEFAULT_WORD_GOAL });
-          localStorage.setItem(SESSION_KEY, created.id);
+          const sessionMap = readMap(SESSION_MAP_KEY);
+          sessionMap[accountScope] = created.id;
+          writeMap(SESSION_MAP_KEY, sessionMap);
           setSessionId(created.id);
         } else {
           await updateSession(sessionId, { content, wordCount: words, wordGoal: DEFAULT_WORD_GOAL });
@@ -92,7 +154,7 @@ export default function App() {
     }, 900);
 
     return () => window.clearTimeout(timeout);
-  }, [content, sessionId, words]);
+  }, [accountScope, content, sessionId, words]);
 
   const handleType = () => {
     setIsTyping(true);
@@ -173,13 +235,41 @@ export default function App() {
     setPetsEnabled(false);
   };
 
+  const onImportFile = () => {
+    importInputRef.current?.click();
+  };
+
+  const handleImportChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+    const text = await file.text();
+    setContent(text);
+    setSaveState(`Imported ${file.name}`);
+    event.target.value = "";
+  };
+
+  const onSignOut = () => {
+    setAccount(null);
+  };
+
   return (
     <main className="app-shell relative min-h-screen">
+      <input
+        ref={importInputRef}
+        type="file"
+        accept=".txt,.md,.markdown,text/plain,text/markdown"
+        className="hidden"
+        onChange={handleImportChange}
+      />
+
       <div className="workspace-shell">
         <LeftSidebar
           onOpenExtensions={() => setIsMarketplaceOpen(true)}
           onExportMarkdown={exportMarkdown}
           onExportPdf={exportPdf}
+          onImportFile={onImportFile}
           onToggleSettings={() => setIsSettingsOpen((previous) => !previous)}
           isSettingsOpen={isSettingsOpen}
         />
@@ -204,6 +294,7 @@ export default function App() {
                 <p className="app-subtitle text-xs">Vscode, but for writing.</p>
               </div>
             </div>
+            <GoogleAuth user={account} onSignIn={setAccount} onSignOut={onSignOut} />
           </header>
 
           <ExtensionsMarketplace

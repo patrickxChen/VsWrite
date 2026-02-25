@@ -24,6 +24,8 @@
 - `src/components/ExtensionsMarketplace.tsx`: Extensions marketplace side panel UI
 - `src/components/PetOverlay.tsx`: Animated screen pets overlay when extension is enabled
 - `src/components/LeftSidebar.tsx`: VS Code-like left sidebar for primary actions (extensions/export/theme)
+- `src/components/GoogleAuth.tsx`: Google sign-in UI and account profile display
+- `src/components/SidebarSettings.tsx`: Bottom-left settings popover
 - `src/lib/api.ts`: REST client for session create/get/update
 - `src/lib/wordCount.ts`: Word counting utility
 - `src/lib/typewriterSound.ts`: Typewriter sound generator
@@ -148,4 +150,10 @@ CREATE TABLE sessions (
 ## Recent UX Update (Settings Placement)
 - Moved theme selection from header to a bottom-left `Settings` (gear) action in the activity bar.
 - Added a settings popover anchored near the bottom-left sidebar, matching VS Code-style placement intent.
+
+## Recent UX Update (Accounts + Last Draft + Import)
+- Added Google account sign-in UI in the top header.
+- Added account-scoped restore behavior for the last written content and last session id.
+- Added left-sidebar `Import File` action for `.txt` and `.md` files.
+- Maintains VS Code-like behavior where users return to their previous writing state.
 

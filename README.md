@@ -3,12 +3,15 @@
 Vscode, but for writing.
 
 ## Features
+- Google sign-in account support
+- Account-scoped restore of last writing session/draft
 - Focus mode toggle
 - Typewriter sound effect toggle
 - VS Code-style theme selection from bottom-left Settings (gear)
 - VS Code-like icon sidebar for key actions
 - Sidebar remains docked on the left across normal viewport sizes
 - Export to Markdown and PDF from left sidebar
+- Import `.txt` / `.md` files from left sidebar
 - Extensions marketplace panel (VS Code-inspired)
 - Screen Pets extension with install/enable/disable/uninstall, full-body sprites, and board movement
 - Session save/load through backend API

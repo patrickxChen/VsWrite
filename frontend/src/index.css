@@ -206,6 +206,74 @@ body {
   justify-content: space-between;
 }
 
+.auth-google-button {
+  min-width: 190px;
+}
+
+.auth-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted-text);
+}
+
+.auth-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--btn-border);
+  border-radius: 0.65rem;
+  background: var(--btn-bg);
+  padding: 0.35rem 0.45rem;
+}
+
+.auth-avatar,
+.auth-avatar-fallback {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.auth-avatar-fallback {
+  display: grid;
+  place-items: center;
+  background: var(--btn-accent-bg);
+  color: var(--btn-accent-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.auth-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.auth-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--panel-text);
+  line-height: 1.1;
+}
+
+.auth-email {
+  font-size: 0.68rem;
+  color: var(--muted-text);
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auth-signout {
+  border: 1px solid var(--btn-border);
+  border-radius: 0.45rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 0.7rem;
+  padding: 0.25rem 0.45rem;
+}
+
 .app-header,
 .toolbar-card,
 .status-strip {

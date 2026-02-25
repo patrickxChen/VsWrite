@@ -2,6 +2,7 @@ type LeftSidebarProps = {
   onOpenExtensions: () => void;
   onExportMarkdown: () => void;
   onExportPdf: () => void;
+  onImportFile: () => void;
   onToggleSettings: () => void;
   isSettingsOpen: boolean;
 };
@@ -10,6 +11,7 @@ export function LeftSidebar({
   onOpenExtensions,
   onExportMarkdown,
   onExportPdf,
+  onImportFile,
   onToggleSettings,
   isSettingsOpen
 }: LeftSidebarProps) {
@@ -37,6 +39,14 @@ export function LeftSidebar({
             <path d="M4 1.9h5.2L12.8 5v9.1H4z" />
             <path d="M9.2 1.9V5h3.6" />
             <path d="M5.4 11.2h5.2" />
+          </svg>
+        </button>
+        <button className="sidebar-action" onClick={onImportFile} title="Import File" aria-label="Import File">
+          <svg className="sidebar-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.35" aria-hidden="true">
+            <path d="M4 1.9h5.2L12.8 5v9.1H4z" />
+            <path d="M9.2 1.9V5h3.6" />
+            <path d="M8 12.6V7.8" />
+            <path d="m5.8 9.8 2.2-2.2 2.2 2.2" />
           </svg>
         </button>
       </div>

@@ -90,3 +90,8 @@
 - Added a bottom-left sidebar `Settings` gear icon.
 - Implemented a settings popover containing the theme selector, aligned with VS Code-like placement.
 
+## Update - 2026-02-25 (Accounts + Last Draft + Import)
+- Added Google sign-in account UI.
+- Added account-scoped last session/draft restore so users return to their latest writing state.
+- Added file import action (`.txt`, `.md`) from the left sidebar.
+
