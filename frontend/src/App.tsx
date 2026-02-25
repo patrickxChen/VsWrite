@@ -4,6 +4,7 @@ import { Editor } from "./components/Editor";
 import { ExtensionsMarketplace } from "./components/ExtensionsMarketplace";
 import { LeftSidebar } from "./components/LeftSidebar";
 import { PetOverlay } from "./components/PetOverlay";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { Toolbar } from "./components/Toolbar";
 import { createSession, getSession, updateSession } from "./lib/api";
 import { playTypewriterKey } from "./lib/typewriterSound";
@@ -179,9 +180,6 @@ export default function App() {
             onOpenExtensions={() => setIsMarketplaceOpen(true)}
             onExportMarkdown={exportMarkdown}
             onExportPdf={exportPdf}
-            theme={theme}
-            themeOptions={THEME_OPTIONS}
-            onThemeChange={setTheme}
           />
         )}
 
@@ -198,6 +196,7 @@ export default function App() {
                 <p className="app-subtitle text-xs">Vscode, but for writing.</p>
               </div>
             </div>
+            {!focusMode && <ThemeSwitcher value={theme} options={THEME_OPTIONS} onChange={setTheme} />}
           </header>
 
           <ExtensionsMarketplace

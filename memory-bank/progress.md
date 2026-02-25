@@ -75,3 +75,9 @@
 - Upgraded pets extension visuals to sprite-like pets with idle animations.
 - Repositioned pets to lay on top of the writing board rather than roaming across the full app screen.
 
+## Update - 2026-02-25 (Sidebar/Icon + Pet Motion Refinement)
+- Refined top-left sidebar actions into icon-only, vertically aligned controls.
+- Replaced emoji-like symbols with VS Code-style SVG-inspired icons.
+- Rebuilt pets into full-body sprites with visible ears/body/legs/tail.
+- Added movement across the writing board with continuous motion loops.
+

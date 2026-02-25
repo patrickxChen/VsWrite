@@ -135,3 +135,9 @@ CREATE TABLE sessions (
 - Updated pet extension visuals from roaming emoji to sprite-like pets with idle/breathing animations.
 - Moved pets to render on top of the writing board (editor container overlay), not across the entire screen.
 
+## Recent UX Update (Alignment + Motion Refinement)
+- Refined left sidebar actions into vertically aligned icon-only controls at top-left.
+- Updated action symbols to be closer to VS Code-style iconography.
+- Upgraded pets to full-body sprite composition (ears/body/legs/tail/eyes).
+- Added active horizontal movement across the writing board, with walk/bounce/tail/shadow animation cycles.
+
