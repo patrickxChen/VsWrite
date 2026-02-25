@@ -1,0 +1,47 @@
+# Progress Tracker
+
+## Date
+2026-02-25
+
+## Completed
+- Created full-stack modular project structure (`frontend`, `backend`, `infra`, `.github/workflows`)
+- Implemented React frontend MVP:
+	- Minimal writing UI
+	- Focus mode toggle
+	- Typewriter sound toggle
+	- Word goal tracker
+	- Export to Markdown and PDF
+- Implemented Node.js backend MVP:
+	- Session CRUD endpoints (`POST/GET/PUT`)
+	- Validation with Zod
+	- Pluggable stores (`memory`, `postgres`, `redis`)
+	- Prometheus metrics endpoint and instrumentation
+- Added Docker setup:
+	- `frontend/Dockerfile`
+	- `backend/Dockerfile`
+	- root `docker-compose.yml`
+- Added infrastructure configs:
+	- NGINX reverse proxy
+	- Prometheus scrape config
+	- Grafana datasource + dashboard provisioning
+- Added GitHub Actions:
+	- CI workflow for tests/builds/images
+	- CD workflow for image push + EC2 deploy via SSH
+- Updated root README with setup, Docker, CI/CD, and monitoring guidance
+
+## Validation Status
+- Frontend tests: passing
+- Backend tests: passing
+- Frontend build: passing
+- Backend build: passing
+
+## Next Steps
+- Add HTTPS-ready production NGINX config (cert paths + redirect 80->443)
+- Add Prisma migrations and seed workflow for PostgreSQL path
+- Add request-level auth/session strategy if multi-user support is needed
+- Add richer frontend integration tests for autosave and export UX
+
+## Notes
+- Implementation is intentionally modular to avoid a monolith.
+- Per workspace constraints, no git commits or branch operations were performed automatically.
+
