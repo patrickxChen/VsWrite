@@ -16,9 +16,9 @@
 - `README.md`: Setup, run, deploy, and monitoring instructions
 
 ### Frontend (`frontend/`)
-- `src/App.tsx`: Main app orchestration (focus mode, autosave, export-at-top, markdown bold insertion, theme selection)
+- `src/App.tsx`: Main app orchestration (focus mode, autosave, account/import flows, extension runtime, and theme selection)
 - `src/components/Editor.tsx`: Editor textarea UI
-- `src/components/Toolbar.tsx`: Focus/sound controls, bold action, and save status
+- `src/components/Toolbar.tsx`: Focus/sound controls and save status
 - `src/components/ExportButtons.tsx`: Markdown/PDF export controls
 - `src/components/ThemeSwitcher.tsx`: VS Code-like theme selector
 - `src/components/ExtensionsMarketplace.tsx`: Extensions marketplace side panel UI
@@ -110,8 +110,6 @@ CREATE TABLE sessions (
 
 ## Recent Frontend UX Upgrade
 - Refined visual design with elevated cards, subtle gradients, and improved spacing/contrast.
-- Added a `Bold` formatting action in toolbar that wraps selected text with markdown markers (`**text**`).
-- Bold action supports cursor-only insertion by placing cursor between inserted markers (`****` -> cursor between).
 
 ## Recent UI Refinement (Professional Pass)
 - Updated brand description to: `Vscode, but for writing.`

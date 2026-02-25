@@ -47,15 +47,13 @@
 
 ## Update - 2026-02-25 (UI + Formatting)
 - Upgraded frontend visuals for a more appealing look while keeping the minimal writing UX.
-- Added toolbar `Bold` option for markdown-style emphasis (`**selected text**`).
-- Added cursor-aware insertion when no text is selected (inserts `****` and places cursor in the middle).
 - Validation: frontend build passes after the update.
 
 ## Update - 2026-02-25 (Visual Tone Refinement)
 - Updated app description text to: `Vscode, but for writing.`
 - Redesigned `VsWrite` header logo mark for a cleaner, more premium look.
 - Reduced childish visual tone by replacing high-saturation playful styles with calmer professional styling.
-- Preserved typewriter sound, bold formatting, and responsive top/bottom toolbar layout.
+- Preserved typewriter sound and responsive top/bottom toolbar layout.
 
 ## Update - 2026-02-25 (Theme System + Layout)
 - Removed goal tracker panel from the active frontend UI.

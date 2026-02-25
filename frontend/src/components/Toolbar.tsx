@@ -1,7 +1,6 @@
 type ToolbarProps = {
   focusMode: boolean;
   onToggleFocus: () => void;
-  onBold: () => void;
   soundOn: boolean;
   onToggleSound: () => void;
   volume: number;
@@ -12,7 +11,6 @@ type ToolbarProps = {
 export function Toolbar({
   focusMode,
   onToggleFocus,
-  onBold,
   soundOn,
   onToggleSound,
   volume,
@@ -26,12 +24,6 @@ export function Toolbar({
         className="toolbar-btn rounded-lg border px-3.5 py-1.5 shadow-sm transition"
       >
         {focusMode ? "Exit Focus" : "Focus Mode"}
-      </button>
-      <button
-        onClick={onBold}
-        className="toolbar-btn toolbar-btn-accent rounded-lg border px-3.5 py-1.5 font-semibold shadow-sm transition"
-      >
-        Bold
       </button>
       <button
         onClick={onToggleSound}

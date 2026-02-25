@@ -194,34 +194,6 @@ export default function App() {
     pdf.save("draft.pdf");
   };
 
-  const applyBoldFormatting = () => {
-    const textarea = editorRef.current;
-    if (!textarea) {
-      return;
-    }
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-
-    if (start === end) {
-      const nextContent = `${content.slice(0, start)}****${content.slice(end)}`;
-      setContent(nextContent);
-      window.requestAnimationFrame(() => {
-        textarea.focus();
-        textarea.setSelectionRange(start + 2, start + 2);
-      });
-      return;
-    }
-
-    const selectedText = content.slice(start, end);
-    const nextContent = `${content.slice(0, start)}**${selectedText}**${content.slice(end)}`;
-    setContent(nextContent);
-    window.requestAnimationFrame(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + 2, end + 2);
-    });
-  };
-
   const installPetsExtension = () => {
     setPetsInstalled(true);
     setPetsEnabled(true);
@@ -322,7 +294,6 @@ export default function App() {
           <Toolbar
             focusMode={focusMode}
             onToggleFocus={() => setFocusMode((previous) => !previous)}
-            onBold={applyBoldFormatting}
             soundOn={soundOn}
             onToggleSound={() => setSoundOn((previous) => !previous)}
             volume={volume}
