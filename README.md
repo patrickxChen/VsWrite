@@ -1,6 +1,6 @@
 # VsWrite
 
-Minimal, distraction-free writing app with a React frontend, Node.js backend, Dockerized runtime, CI/CD, and observability.
+Vscode, but for writing.
 
 ## Features
 - Focus mode toggle

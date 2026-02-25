@@ -5,16 +5,16 @@ type ExportButtonsProps = {
 
 export function ExportButtons({ onExportMarkdown, onExportPdf }: ExportButtonsProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       <button
         onClick={onExportMarkdown}
-        className="rounded-lg border border-slate-600/80 bg-slate-800/80 px-3 py-1.5 text-sm text-slate-100 transition hover:bg-slate-700"
+        className="rounded-lg border border-slate-300 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-100"
       >
         Export .md
       </button>
       <button
         onClick={onExportPdf}
-        className="rounded-lg border border-emerald-400/60 bg-emerald-500/20 px-3 py-1.5 text-sm text-emerald-100 transition hover:bg-emerald-500/30"
+        className="rounded-lg border border-violet-300 bg-violet-50 px-3.5 py-1.5 text-sm font-medium text-violet-700 shadow-sm transition hover:bg-violet-100"
       >
         Export PDF
       </button>

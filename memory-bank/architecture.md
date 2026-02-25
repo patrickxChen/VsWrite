@@ -107,3 +107,9 @@ CREATE TABLE sessions (
 - Added a `Bold` formatting action in toolbar that wraps selected text with markdown markers (`**text**`).
 - Bold action supports cursor-only insertion by placing cursor between inserted markers (`****` -> cursor between).
 
+## Recent UI Refinement (Professional Pass)
+- Updated brand description to: `Vscode, but for writing.`
+- Reworked header branding with a cleaner custom `VsWrite` logo mark.
+- Shifted from highly playful pastel styling to a more professional pastel-neutral aesthetic.
+- Kept smooth interactions and typewriter feedback while reducing visual noise.
+
