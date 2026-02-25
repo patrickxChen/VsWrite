@@ -85,3 +85,8 @@
 - Fixed responsive behavior that could collapse the sidebar to top layout on narrower screens.
 - Sidebar is now persistently docked on the left and visible independent of focus mode.
 
+## Update - 2026-02-25 (Theme in Bottom-Left Settings)
+- Moved theme controls out of the top area.
+- Added a bottom-left sidebar `Settings` gear icon.
+- Implemented a settings popover containing the theme selector, aligned with VS Code-like placement.
+

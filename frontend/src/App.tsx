@@ -4,7 +4,7 @@ import { Editor } from "./components/Editor";
 import { ExtensionsMarketplace } from "./components/ExtensionsMarketplace";
 import { LeftSidebar } from "./components/LeftSidebar";
 import { PetOverlay } from "./components/PetOverlay";
-import { ThemeSwitcher } from "./components/ThemeSwitcher";
+import { SidebarSettings } from "./components/SidebarSettings";
 import { Toolbar } from "./components/Toolbar";
 import { createSession, getSession, updateSession } from "./lib/api";
 import { playTypewriterKey } from "./lib/typewriterSound";
@@ -35,6 +35,7 @@ export default function App() {
   const [isTyping, setIsTyping] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem(THEME_KEY) ?? "dark-plus");
   const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [petsInstalled, setPetsInstalled] = useState(localStorage.getItem(PETS_INSTALLED_KEY) === "true");
   const [petsEnabled, setPetsEnabled] = useState(localStorage.getItem(PETS_ENABLED_KEY) === "true");
 
@@ -179,6 +180,15 @@ export default function App() {
           onOpenExtensions={() => setIsMarketplaceOpen(true)}
           onExportMarkdown={exportMarkdown}
           onExportPdf={exportPdf}
+          onToggleSettings={() => setIsSettingsOpen((previous) => !previous)}
+          isSettingsOpen={isSettingsOpen}
+        />
+
+        <SidebarSettings
+          isOpen={isSettingsOpen}
+          theme={theme}
+          themeOptions={THEME_OPTIONS}
+          onThemeChange={setTheme}
         />
 
         <section className="workspace-main">
@@ -194,7 +204,6 @@ export default function App() {
                 <p className="app-subtitle text-xs">Vscode, but for writing.</p>
               </div>
             </div>
-            {!focusMode && <ThemeSwitcher value={theme} options={THEME_OPTIONS} onChange={setTheme} />}
           </header>
 
           <ExtensionsMarketplace

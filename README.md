@@ -5,7 +5,7 @@ Vscode, but for writing.
 ## Features
 - Focus mode toggle
 - Typewriter sound effect toggle
-- VS Code-style theme switcher (Dark+, Light+, Monokai, Quiet Light)
+- VS Code-style theme selection from bottom-left Settings (gear)
 - VS Code-like icon sidebar for key actions
 - Sidebar remains docked on the left across normal viewport sizes
 - Export to Markdown and PDF from left sidebar

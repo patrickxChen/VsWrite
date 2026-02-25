@@ -145,3 +145,7 @@ CREATE TABLE sessions (
 - Fixed layout behavior so the left activity/sidebar remains docked on the left instead of collapsing to a top row at common viewport widths.
 - Removed focus-mode dependency for sidebar visibility so core VS Code-style navigation stays consistently visible.
 
+## Recent UX Update (Settings Placement)
+- Moved theme selection from header to a bottom-left `Settings` (gear) action in the activity bar.
+- Added a settings popover anchored near the bottom-left sidebar, matching VS Code-style placement intent.
+

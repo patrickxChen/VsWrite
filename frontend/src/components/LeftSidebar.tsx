@@ -2,9 +2,17 @@ type LeftSidebarProps = {
   onOpenExtensions: () => void;
   onExportMarkdown: () => void;
   onExportPdf: () => void;
+  onToggleSettings: () => void;
+  isSettingsOpen: boolean;
 };
 
-export function LeftSidebar({ onOpenExtensions, onExportMarkdown, onExportPdf }: LeftSidebarProps) {
+export function LeftSidebar({
+  onOpenExtensions,
+  onExportMarkdown,
+  onExportPdf,
+  onToggleSettings,
+  isSettingsOpen
+}: LeftSidebarProps) {
   return (
     <aside className="left-sidebar">
       <div className="left-sidebar-top">
@@ -29,6 +37,21 @@ export function LeftSidebar({ onOpenExtensions, onExportMarkdown, onExportPdf }:
             <path d="M4 1.9h5.2L12.8 5v9.1H4z" />
             <path d="M9.2 1.9V5h3.6" />
             <path d="M5.4 11.2h5.2" />
+          </svg>
+        </button>
+      </div>
+
+      <div className="left-sidebar-bottom">
+        <button
+          className="sidebar-action"
+          onClick={onToggleSettings}
+          title="Settings"
+          aria-label="Settings"
+          aria-pressed={isSettingsOpen}
+        >
+          <svg className="sidebar-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true">
+            <path d="M8 5.1a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8Z" />
+            <path d="M13.7 8a5.8 5.8 0 0 0-.1-1.1l1.4-1-1.2-2.2-1.7.5a6 6 0 0 0-1.9-1.1l-.3-1.8H7.1l-.3 1.8c-.7.2-1.3.5-1.9 1.1l-1.7-.5-1.2 2.2 1.4 1a5.8 5.8 0 0 0 0 2.2l-1.4 1 1.2 2.2 1.7-.5c.6.5 1.2.9 1.9 1.1l.3 1.8h2.8l.3-1.8c.7-.2 1.3-.6 1.9-1.1l1.7.5 1.2-2.2-1.4-1c.1-.4.1-.8.1-1.1Z" />
           </svg>
         </button>
       </div>
