@@ -2,9 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { Editor } from "./components/Editor";
 import { ExtensionsMarketplace } from "./components/ExtensionsMarketplace";
-import { ExportButtons } from "./components/ExportButtons";
+import { LeftSidebar } from "./components/LeftSidebar";
 import { PetOverlay } from "./components/PetOverlay";
-import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { Toolbar } from "./components/Toolbar";
 import { createSession, getSession, updateSession } from "./lib/api";
 import { playTypewriterKey } from "./lib/typewriterSound";
@@ -173,66 +172,72 @@ export default function App() {
   };
 
   return (
-    <main className="app-shell relative mx-auto max-w-5xl px-3 py-6 sm:px-4 md:py-8">
-      {petsInstalled && petsEnabled && <PetOverlay />}
+    <main className="app-shell relative min-h-screen">
+      <div className="workspace-shell">
+        {!focusMode && (
+          <LeftSidebar
+            onOpenExtensions={() => setIsMarketplaceOpen(true)}
+            onExportMarkdown={exportMarkdown}
+            onExportPdf={exportPdf}
+            theme={theme}
+            themeOptions={THEME_OPTIONS}
+            onThemeChange={setTheme}
+          />
+        )}
 
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_18%,rgba(56,189,248,0.14),transparent_45%),radial-gradient(circle_at_86%_12%,rgba(167,139,250,0.12),transparent_44%),radial-gradient(circle_at_50%_92%,rgba(250,204,21,0.08),transparent_40%)]" />
-      {!focusMode && (
-        <header className="app-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-300/80 bg-white/80 px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] backdrop-blur">
-          <div className="flex items-center gap-3">
-            <div className="logo-mark relative h-10 w-10 rounded-xl bg-gradient-to-br from-sky-500 to-violet-500 shadow-[0_6px_16px_rgba(59,130,246,0.35)]">
-              <div className="logo-mark-inner absolute inset-[6px] rounded-lg bg-white/90" />
-              <div className="logo-bar-a absolute left-[12px] top-[11px] h-[18px] w-[4px] rounded bg-sky-600" />
-              <div className="logo-bar-b absolute left-[18px] top-[11px] h-[18px] w-[4px] rounded bg-violet-600" />
+        <section className="workspace-main">
+          <header className="app-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] backdrop-blur">
+            <div className="flex items-center gap-3">
+              <div className="logo-mark relative h-10 w-10 rounded-xl bg-gradient-to-br from-sky-500 to-violet-500 shadow-[0_6px_16px_rgba(59,130,246,0.35)]">
+                <div className="logo-mark-inner absolute inset-[6px] rounded-lg bg-white/90" />
+                <div className="logo-bar-a absolute left-[12px] top-[11px] h-[18px] w-[4px] rounded bg-sky-600" />
+                <div className="logo-bar-b absolute left-[18px] top-[11px] h-[18px] w-[4px] rounded bg-violet-600" />
+              </div>
+              <div>
+                <h1 className="app-title text-2xl font-semibold tracking-tight">VsWrite</h1>
+                <p className="app-subtitle text-xs">Vscode, but for writing.</p>
+              </div>
             </div>
-            <div>
-              <h1 className="app-title text-2xl font-semibold tracking-tight text-slate-900">VsWrite</h1>
-              <p className="app-subtitle text-xs text-slate-600">Vscode, but for writing.</p>
-            </div>
+          </header>
+
+          <ExtensionsMarketplace
+            isOpen={isMarketplaceOpen}
+            onClose={() => setIsMarketplaceOpen(false)}
+            petsInstalled={petsInstalled}
+            petsEnabled={petsEnabled}
+            onInstallPets={installPetsExtension}
+            onTogglePets={togglePetsExtension}
+            onUninstallPets={uninstallPetsExtension}
+          />
+
+          <Toolbar
+            focusMode={focusMode}
+            onToggleFocus={() => setFocusMode((previous) => !previous)}
+            onBold={applyBoldFormatting}
+            soundOn={soundOn}
+            onToggleSound={() => setSoundOn((previous) => !previous)}
+            volume={volume}
+            onVolumeChange={setVolume}
+            saveState={saveState}
+          />
+
+          <div className="editor-board">
+            {petsInstalled && petsEnabled && <PetOverlay />}
+            <Editor
+              value={content}
+              onChange={setContent}
+              onKeyTyped={handleType}
+              focusMode={focusMode}
+              editorRef={editorRef}
+              isTyping={isTyping}
+            />
           </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <button className="extensions-launch rounded-lg border px-3 py-1.5 text-sm font-medium shadow-sm transition" onClick={() => setIsMarketplaceOpen(true)}>
-              Extensions
-            </button>
-            <ThemeSwitcher value={theme} options={THEME_OPTIONS} onChange={setTheme} />
-            <ExportButtons onExportMarkdown={exportMarkdown} onExportPdf={exportPdf} />
-          </div>
-        </header>
-      )}
 
-      <ExtensionsMarketplace
-        isOpen={isMarketplaceOpen}
-        onClose={() => setIsMarketplaceOpen(false)}
-        petsInstalled={petsInstalled}
-        petsEnabled={petsEnabled}
-        onInstallPets={installPetsExtension}
-        onTogglePets={togglePetsExtension}
-        onUninstallPets={uninstallPetsExtension}
-      />
-
-      <Toolbar
-        focusMode={focusMode}
-        onToggleFocus={() => setFocusMode((previous) => !previous)}
-        onBold={applyBoldFormatting}
-        soundOn={soundOn}
-        onToggleSound={() => setSoundOn((previous) => !previous)}
-        volume={volume}
-        onVolumeChange={setVolume}
-        saveState={saveState}
-      />
-
-      <Editor
-        value={content}
-        onChange={setContent}
-        onKeyTyped={handleType}
-        focusMode={focusMode}
-        editorRef={editorRef}
-        isTyping={isTyping}
-      />
-
-      <section className="status-strip mt-4 flex items-center justify-end rounded-xl border border-slate-300/70 px-3 py-2 text-sm">
-        <span className="font-medium">Words: {words}</span>
-      </section>
+          <section className="status-strip mt-4 flex items-center justify-end rounded-xl border px-3 py-2 text-sm">
+            <span className="font-medium">Words: {words}</span>
+          </section>
+        </section>
+      </div>
     </main>
   );
 }

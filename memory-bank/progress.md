@@ -69,3 +69,9 @@
 - Added animated pet overlay runtime when extension is enabled.
 - Persisted extension install and enable state in local storage.
 
+## Update - 2026-02-25 (VS Code Sidebar + Sprite Pets)
+- Moved `Extensions` and export controls to a VS Code-like left sidebar.
+- Added responsive left sidebar adaptation for narrower screens.
+- Upgraded pets extension visuals to sprite-like pets with idle animations.
+- Repositioned pets to lay on top of the writing board rather than roaming across the full app screen.
+

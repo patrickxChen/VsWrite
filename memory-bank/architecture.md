@@ -23,6 +23,7 @@
 - `src/components/ThemeSwitcher.tsx`: VS Code-like theme selector
 - `src/components/ExtensionsMarketplace.tsx`: Extensions marketplace side panel UI
 - `src/components/PetOverlay.tsx`: Animated screen pets overlay when extension is enabled
+- `src/components/LeftSidebar.tsx`: VS Code-like left sidebar for primary actions (extensions/export/theme)
 - `src/lib/api.ts`: REST client for session create/get/update
 - `src/lib/wordCount.ts`: Word counting utility
 - `src/lib/typewriterSound.ts`: Typewriter sound generator
@@ -127,4 +128,10 @@ CREATE TABLE sessions (
 - Added first extension: `Screen Pets`.
 - Added extension lifecycle controls: `Install`, `Enable/Disable`, and `Uninstall`.
 - Persisted extension install/enable state in local storage.
+
+## Recent UX Update (VS Code Sidebar + Sprite Pets)
+- Moved `Extensions` and export actions into a dedicated left sidebar to match VS Code-like layout patterns.
+- Added responsive sidebar behavior for tablet-width screens.
+- Updated pet extension visuals from roaming emoji to sprite-like pets with idle/breathing animations.
+- Moved pets to render on top of the writing board (editor container overlay), not across the entire screen.
 

@@ -6,9 +6,10 @@ Vscode, but for writing.
 - Focus mode toggle
 - Typewriter sound effect toggle
 - VS Code-style theme switcher (Dark+, Light+, Monokai, Quiet Light)
-- Export to Markdown and PDF
+- VS Code-like left sidebar for key actions
+- Export to Markdown and PDF from left sidebar
 - Extensions marketplace panel (VS Code-inspired)
-- Screen Pets extension with install/enable/disable/uninstall
+- Screen Pets extension with install/enable/disable/uninstall and sprite-style board overlay
 - Session save/load through backend API
 
 ## Project Structure
