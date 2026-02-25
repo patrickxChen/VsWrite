@@ -3,6 +3,15 @@
 ## Goal
 Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and production-grade monitoring.
 
+## Current Phase Status (Updated)
+- ✅ Phase 1: Foundation & scaffolding — completed
+- ✅ Phase 2: Frontend core UX — completed (evolved to VS Code-like layout + extensions UI)
+- ✅ Phase 3: Backend core API — completed
+- ✅ Phase 4: Frontend/backend integration — completed
+- 🔄 Phase 5: CI/CD + deployment hardening — in progress
+- 🔄 Phase 6: Monitoring hardening — in progress
+- ⏳ Phase 7: Final testing/validation — pending
+
 ## Phase 1: Foundation & Project Scaffolding
 ### Tasks
 - Initialize monorepo-style structure:
@@ -22,14 +31,20 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 - Build minimal editor UI with Tailwind
 - Implement focus mode toggle
 - Add typewriter sound toggle + sound playback on key input
-- Implement word counting utility and goal tracker UI
+- Implement word counting utility
 - Implement export features:
   - Markdown export from editor content
   - PDF export using client-side utility library
+- Add VS Code-like layout model:
+  - Left activity bar
+  - Sidebar actions for extensions/export/import
+  - Bottom-left settings affordance
+- Add extensions marketplace UI with install/enable/disable controls
+- Add screen pets extension overlay runtime
 
 ### Deliverables
 - Working writing experience with all MVP UX features
-- Componentized frontend structure (`Editor`, `Toolbar`, `GoalTracker`, `ExportMenu`)
+- Componentized frontend structure (`Editor`, `Toolbar`, `LeftSidebar`, `ExtensionsMarketplace`)
 
 ---
 
@@ -58,10 +73,28 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 - Load/restore latest session state on app startup
 - Ensure API URL and env handling per environment
 - Add graceful error UI (save failed / retry)
+- Add account continuity behavior:
+  - Google sign-in integration
+  - Account-scoped last draft/session restore
+  - Session map persistence per account/guest scope
+- Add file import flow for `.txt`/`.md`
 
 ### Deliverables
 - End-to-end write/save/restore workflow
 - Verified content persistence between restarts
+- Account-aware restore and import workflow operational
+
+---
+
+## Phase 4.5: Account & Identity Stabilization
+### Tasks
+- Add frontend env template and local env usage for `VITE_GOOGLE_CLIENT_ID`
+- Validate signed-in/signed-out UX and fallback behavior when client ID is missing
+- Ensure account controls are placed in VS Code-like left sidebar structure
+
+### Deliverables
+- Stable account UX with clear setup requirements
+- Identity feature aligned with overall VS Code-style navigation model
 
 ---
 
@@ -78,6 +111,7 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
   - SSH deploy to EC2
   - Pull updated images + restart services
 - Configure NGINX reverse proxy and HTTPS cert management
+- Add deployment environment docs for frontend auth variables (e.g., `VITE_GOOGLE_CLIENT_ID`)
 
 ### Deliverables
 - Repeatable automated pipeline from commit to deployed service
@@ -105,6 +139,10 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 ### Tasks
 - Unit tests for word counting, export utilities, and backend services
 - Integration tests for session API
+- Add frontend behavior tests for:
+  - Account-scoped restore logic
+  - File import flow
+  - Sidebar actions (extensions/export/settings/account)
 - Smoke test deployment and HTTPS routing
 - Validate monitoring data flow and dashboards
 - Run final release checklist
