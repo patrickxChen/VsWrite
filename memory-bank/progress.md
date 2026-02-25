@@ -57,3 +57,9 @@
 - Reduced childish visual tone by replacing high-saturation playful styles with calmer professional styling.
 - Preserved typewriter sound, bold formatting, and responsive top/bottom toolbar layout.
 
+## Update - 2026-02-25 (Theme System + Layout)
+- Removed goal tracker panel from the active frontend UI.
+- Added VS Code-like theme selection (`Dark+`, `Light+`, `Monokai`, `Quiet Light`) with persistence.
+- Moved export actions to the top header area.
+- Updated styling to use theme tokens across header, toolbar, editor, buttons, and status strip.
+

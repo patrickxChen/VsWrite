@@ -8,13 +8,13 @@ export function ExportButtons({ onExportMarkdown, onExportPdf }: ExportButtonsPr
     <div className="flex flex-wrap gap-2">
       <button
         onClick={onExportMarkdown}
-        className="rounded-lg border border-slate-300 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-100"
+        className="export-btn rounded-lg border px-3.5 py-1.5 text-sm font-medium shadow-sm transition"
       >
         Export .md
       </button>
       <button
         onClick={onExportPdf}
-        className="rounded-lg border border-violet-300 bg-violet-50 px-3.5 py-1.5 text-sm font-medium text-violet-700 shadow-sm transition hover:bg-violet-100"
+        className="export-btn export-btn-accent rounded-lg border px-3.5 py-1.5 text-sm font-medium shadow-sm transition"
       >
         Export PDF
       </button>

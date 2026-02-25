@@ -5,7 +5,7 @@ Vscode, but for writing.
 ## Features
 - Focus mode toggle
 - Typewriter sound effect toggle
-- Word goal tracker
+- VS Code-style theme switcher (Dark+, Light+, Monokai, Quiet Light)
 - Export to Markdown and PDF
 - Session save/load through backend API
 

@@ -16,11 +16,11 @@
 - `README.md`: Setup, run, deploy, and monitoring instructions
 
 ### Frontend (`frontend/`)
-- `src/App.tsx`: Main app orchestration (focus mode, autosave, export, markdown bold insertion)
+- `src/App.tsx`: Main app orchestration (focus mode, autosave, export-at-top, markdown bold insertion, theme selection)
 - `src/components/Editor.tsx`: Editor textarea UI
 - `src/components/Toolbar.tsx`: Focus/sound controls, bold action, and save status
-- `src/components/GoalTracker.tsx`: Word count + word goal progress UI
 - `src/components/ExportButtons.tsx`: Markdown/PDF export controls
+- `src/components/ThemeSwitcher.tsx`: VS Code-like theme selector
 - `src/lib/api.ts`: REST client for session create/get/update
 - `src/lib/wordCount.ts`: Word counting utility
 - `src/lib/typewriterSound.ts`: Typewriter sound generator
@@ -112,4 +112,10 @@ CREATE TABLE sessions (
 - Reworked header branding with a cleaner custom `VsWrite` logo mark.
 - Shifted from highly playful pastel styling to a more professional pastel-neutral aesthetic.
 - Kept smooth interactions and typewriter feedback while reducing visual noise.
+
+## Recent UX Update (Themes + Layout)
+- Removed goal tracker panel from visible UI.
+- Moved export controls to top header as requested.
+- Added VS Code-inspired theme presets: `Dark+`, `Light+`, `Monokai`, and `Quiet Light`.
+- Introduced CSS variable theme tokens and persisted user theme preference in local storage.
 

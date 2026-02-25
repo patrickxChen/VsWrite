@@ -2,13 +2,22 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { Editor } from "./components/Editor";
 import { ExportButtons } from "./components/ExportButtons";
-import { GoalTracker } from "./components/GoalTracker";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { Toolbar } from "./components/Toolbar";
 import { createSession, getSession, updateSession } from "./lib/api";
 import { playTypewriterKey } from "./lib/typewriterSound";
 import { countWords } from "./lib/wordCount";
 
 const SESSION_KEY = "vswrite.session.id";
+const THEME_KEY = "vswrite.theme";
+const DEFAULT_WORD_GOAL = 300;
+
+const THEME_OPTIONS = [
+  { id: "dark-plus", label: "Dark+" },
+  { id: "light-plus", label: "Light+" },
+  { id: "monokai", label: "Monokai" },
+  { id: "quiet-light", label: "Quiet Light" }
+];
 
 export default function App() {
   const editorRef = useRef<HTMLTextAreaElement>(null);
@@ -17,12 +26,17 @@ export default function App() {
   const [focusMode, setFocusMode] = useState(false);
   const [soundOn, setSoundOn] = useState(true);
   const [volume, setVolume] = useState(0.6);
-  const [wordGoal, setWordGoal] = useState(300);
   const [saveState, setSaveState] = useState("Idle");
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [isTyping, setIsTyping] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem(THEME_KEY) ?? "dark-plus");
 
   const words = useMemo(() => countWords(content), [content]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem(THEME_KEY, theme);
+  }, [theme]);
 
   useEffect(() => {
     const id = localStorage.getItem(SESSION_KEY);
@@ -34,7 +48,6 @@ export default function App() {
       .then((session) => {
         setSessionId(session.id);
         setContent(session.content);
-        setWordGoal(session.wordGoal);
       })
       .catch(() => {
         localStorage.removeItem(SESSION_KEY);
@@ -50,11 +63,11 @@ export default function App() {
       setSaveState("Saving...");
       try {
         if (!sessionId) {
-          const created = await createSession({ content, wordCount: words, wordGoal });
+          const created = await createSession({ content, wordCount: words, wordGoal: DEFAULT_WORD_GOAL });
           localStorage.setItem(SESSION_KEY, created.id);
           setSessionId(created.id);
         } else {
-          await updateSession(sessionId, { content, wordCount: words, wordGoal });
+          await updateSession(sessionId, { content, wordCount: words, wordGoal: DEFAULT_WORD_GOAL });
         }
         setSaveState("Saved");
       } catch {
@@ -63,7 +76,7 @@ export default function App() {
     }, 900);
 
     return () => window.clearTimeout(timeout);
-  }, [content, sessionId, wordGoal, words]);
+  }, [content, sessionId, words]);
 
   const handleType = () => {
     setIsTyping(true);
@@ -131,20 +144,24 @@ export default function App() {
   };
 
   return (
-    <main className="relative mx-auto max-w-5xl px-3 py-6 sm:px-4 md:py-8">
+    <main className="app-shell relative mx-auto max-w-5xl px-3 py-6 sm:px-4 md:py-8">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_18%,rgba(56,189,248,0.14),transparent_45%),radial-gradient(circle_at_86%_12%,rgba(167,139,250,0.12),transparent_44%),radial-gradient(circle_at_50%_92%,rgba(250,204,21,0.08),transparent_40%)]" />
       {!focusMode && (
-        <header className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-300/80 bg-white/80 px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] backdrop-blur">
+        <header className="app-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-300/80 bg-white/80 px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] backdrop-blur">
           <div className="flex items-center gap-3">
-            <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-sky-500 to-violet-500 shadow-[0_6px_16px_rgba(59,130,246,0.35)]">
-              <div className="absolute inset-[6px] rounded-lg bg-white/90" />
-              <div className="absolute left-[12px] top-[11px] h-[18px] w-[4px] rounded bg-sky-600" />
-              <div className="absolute left-[18px] top-[11px] h-[18px] w-[4px] rounded bg-violet-600" />
+            <div className="logo-mark relative h-10 w-10 rounded-xl bg-gradient-to-br from-sky-500 to-violet-500 shadow-[0_6px_16px_rgba(59,130,246,0.35)]">
+              <div className="logo-mark-inner absolute inset-[6px] rounded-lg bg-white/90" />
+              <div className="logo-bar-a absolute left-[12px] top-[11px] h-[18px] w-[4px] rounded bg-sky-600" />
+              <div className="logo-bar-b absolute left-[18px] top-[11px] h-[18px] w-[4px] rounded bg-violet-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-slate-900">VsWrite</h1>
-              <p className="text-xs text-slate-600">Vscode, but for writing.</p>
+              <h1 className="app-title text-2xl font-semibold tracking-tight text-slate-900">VsWrite</h1>
+              <p className="app-subtitle text-xs text-slate-600">Vscode, but for writing.</p>
             </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <ThemeSwitcher value={theme} options={THEME_OPTIONS} onChange={setTheme} />
+            <ExportButtons onExportMarkdown={exportMarkdown} onExportPdf={exportPdf} />
           </div>
         </header>
       )}
@@ -169,15 +186,8 @@ export default function App() {
         isTyping={isTyping}
       />
 
-      <section className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-300/80 bg-white/82 p-3.5 shadow-[0_10px_22px_rgba(15,23,42,0.07)] backdrop-blur">
-        <GoalTracker wordCount={words} wordGoal={wordGoal} onGoalChange={setWordGoal} />
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          <div className="flex items-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm">
-            <span>Total words:</span>
-            <span>{words}</span>
-          </div>
-          <ExportButtons onExportMarkdown={exportMarkdown} onExportPdf={exportPdf} />
-        </div>
+      <section className="status-strip mt-4 flex items-center justify-end rounded-xl border border-slate-300/70 px-3 py-2 text-sm">
+        <span className="font-medium">Words: {words}</span>
       </section>
     </main>
   );
