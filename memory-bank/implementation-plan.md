@@ -9,7 +9,7 @@ Deliver an MVP Aesthetic Writing App with complete DevOps pipeline and productio
 - ✅ Phase 3: Backend core API — completed
 - ✅ Phase 4: Frontend/backend integration — completed
 - ✅ Phase 5: CI/CD + deployment hardening — completed
-- 🔄 Phase 6: Monitoring hardening — in progress
+- 🔄 Phase 6: Monitoring hardening — in progress (baseline Prometheus alerts configured)
 - ⏳ Phase 7: Final testing/validation — pending
 
 ## Phase 1: Foundation & Project Scaffolding

@@ -105,3 +105,9 @@
 - Hardened CD workflow to pass frontend auth build args and run post-deploy `/health` checks.
 - Updated deployment docs in `README.md` with production rollout commands.
 
+## Update - 2026-02-25 (Phase 6 Monitoring Hardening)
+- Added Prometheus alert rules in `infra/monitoring/alerts.yml`.
+- Added alert rule loading in `infra/monitoring/prometheus.yml`.
+- Mounted alerts config in both `docker-compose.yml` and `docker-compose.prod.yml`.
+- Added monitoring verification guidance and alert inventory in `README.md`.
+

@@ -94,6 +94,17 @@ Production files:
 	- Active sessions
 	- Uptime
 	- 5xx error trend
+- Baseline Prometheus alerts are defined in `infra/monitoring/alerts.yml`:
+	- `VsWriteBackendDown`
+	- `VsWriteHighP95Latency`
+	- `VsWriteHigh5xxErrorRate`
+	- `VsWriteNoSessionTraffic`
+
+### Monitoring Verification
+- Check Prometheus rules loaded:
+	- `http://localhost:9090/rules`
+- Check active alerts:
+	- `http://localhost:9090/alerts`
 
 ## Testing
 - Frontend: `cd frontend && npm test`

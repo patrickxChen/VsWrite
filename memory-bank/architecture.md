@@ -52,6 +52,7 @@
 - `nginx/nginx.prod.conf`: HTTPS reverse proxy (`80 -> 443` redirect, TLS cert paths, app/API routing)
 - `nginx/certs/`: Mounted certificate directory for production TLS material
 - `monitoring/prometheus.yml`: Prometheus scrape config
+- `monitoring/alerts.yml`: Prometheus alert rules (backend down, high latency, high 5xx, traffic anomaly)
 - `monitoring/grafana/provisioning/**`: Auto-provisioned datasource and dashboard config
 
 ## API Surface
@@ -169,4 +170,9 @@ CREATE TABLE sessions (
 - Added production deployment compose file (`docker-compose.prod.yml`) with GHCR image flow.
 - Added HTTPS-ready NGINX production config and cert mount strategy.
 - Hardened CD workflow with frontend build args for auth config and post-deploy `/health` validation.
+
+## Recent Monitoring Update (Phase 6 Hardening)
+- Added baseline Prometheus alert rules for backend availability, latency, and error-rate regression.
+- Wired alert rule loading in Prometheus config and docker compose mounts (local + production).
+- Added monitoring verification references for rules/alerts visibility.
 
