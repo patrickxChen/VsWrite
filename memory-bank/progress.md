@@ -125,3 +125,8 @@
 	- Backend build: passing
 - Deployment smoke validation remains pending in local workspace due unavailable Docker runtime on host.
 
+## Update - 2026-02-28 (Beginner Deployment Simplification)
+- Added `docker-compose.easy.yml` with only frontend, backend, and nginx services.
+- Updated `README.md` to provide a beginner-first deployment path.
+- Kept advanced GHCR/EC2/CD flow available but made it optional for first deployment.
+

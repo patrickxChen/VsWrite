@@ -11,6 +11,7 @@
 
 ### Root
 - `docker-compose.yml`: Runs full app stack (frontend, backend, nginx, prometheus, grafana, postgres, redis)
+- `docker-compose.easy.yml`: Beginner stack (frontend + backend + nginx only) for simple deployments
 - `docker-compose.prod.yml`: Production stack using prebuilt GHCR images, HTTPS NGINX, and `.env.prod` runtime settings
 - `.env.prod.example`: Template for production environment variables consumed by deployment compose/config
 - `.github/workflows/ci.yml`: Test/build checks and Docker image build validation
@@ -175,4 +176,9 @@ CREATE TABLE sessions (
 - Added baseline Prometheus alert rules for backend availability, latency, and error-rate regression.
 - Wired alert rule loading in Prometheus config and docker compose mounts (local + production).
 - Added monitoring verification references for rules/alerts visibility.
+
+## Recent Deployment Simplification (Beginner Mode)
+- Added `docker-compose.easy.yml` for low-complexity deploys.
+- Beginner mode removes GHCR/EC2 CD requirements and runs only frontend, backend, and nginx.
+- README now prioritizes beginner-first deployment guidance before advanced production workflow.
 

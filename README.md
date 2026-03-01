@@ -2,6 +2,18 @@
 
 Vscode, but for writing.
 
+## Start Here (Beginner Path)
+If deployment feels too advanced, use the easy mode first.
+
+1. Install Docker Desktop.
+2. Run:
+	- `docker compose -f docker-compose.easy.yml up --build`
+3. Open:
+	- `http://localhost`
+
+This mode runs only 3 containers: frontend, backend, and nginx.
+No AWS, no GHCR, no TLS setup, no monitoring stack.
+
 ## Features
 - Google sign-in account support
 - Account-scoped restore of last writing session/draft
@@ -45,6 +57,17 @@ Vscode, but for writing.
 	- Prometheus: `http://localhost:9090`
 	- Grafana: `http://localhost:3001`
 
+## Easy vs Full Deploy
+- Easy mode (recommended to start):
+	- `docker-compose.easy.yml`
+	- Simple local/server deploy with minimal services
+- Full mode:
+	- `docker-compose.yml`
+	- Includes monitoring + postgres + redis services
+- Production mode (advanced):
+	- `docker-compose.prod.yml`
+	- GHCR images + HTTPS + EC2 + GitHub CD
+
 ## Backend Data Store
 Set `DATA_STORE` for backend:
 - `memory` (default)
@@ -69,6 +92,17 @@ Required repository secrets for deployment:
 - `EC2_USER`
 - `EC2_SSH_KEY`
 - `VITE_GOOGLE_CLIENT_ID`
+
+## Beginner Server Deploy (No CI/CD)
+For a first cloud deploy, you can skip GitHub Actions entirely:
+
+1. SSH into your server.
+2. Clone the repo.
+3. Run:
+	- `docker compose -f docker-compose.easy.yml up --build -d`
+4. Visit server IP in browser.
+
+You can move to the advanced production workflow later.
 
 ## NGINX + HTTPS (Production)
 1. Install Docker and Docker Compose on EC2 and clone the repo into `/opt/vswrite`.
